@@ -1,0 +1,13 @@
+server:
+  port: 80
+
+spring:
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+    resources:
+      cache-period: 604800
+      chain:
+        gzipped: true
+        cache: false
