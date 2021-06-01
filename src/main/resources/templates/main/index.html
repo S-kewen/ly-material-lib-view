@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ly素材库</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://static.iskwen.com/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link href="https://static.iskwen.com/pocketfarm-admin/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://static.iskwen.com/layui-v2.5.5/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="https://static.iskwen.com/layui-v2.5.5/layui/style/admin.css" media="all">
+    <link href="https://static.iskwen.com/ly2ui-v1.0.0/css/ly2ui.css" rel="stylesheet">
+</head>
+<body class="layui-layout-body">
+
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                    <a href="javascript:;" layadmin-event="flexible" title="shrink">
+                        <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="//ysc.ganhuoya.com:8899/druid" target="_blank" title="druid">
+                        <i class="layui-icon layui-icon-chart"><span class="layui-badge-dot"></span></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:refresh();" layadmin-event="refresh" title="refresh">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="theme">
+                        <i class="layui-icon layui-icon-theme"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="fullscreen">
+                        <i class="layui-icon layui-icon-screen-full"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite id="usernameByCite"></cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:logout();" style="text-align: center;">退出登录</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:showTip('Browser does not support!');" id="versionMsg" name="versionMsg"><i
+                            class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+                <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                    <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu">
+            <div class="layui-side-scroll">
+                <div class="layui-logo">
+                    <span id="usernameBySpan">ly素材库</span>
+                </div>
+
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+                    lay-filter="layadmin-system-side-menu">
+                    <li data-name="home" class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>项目管理</cite>
+                        </a>
+                        <dl class="layui-nav-child list-group">
+                            <dd data-name="console" class="layui-this">
+                                <a class="list-group-item" lay-href="project/listProject"><i
+                                        class="fa fa-th-list fa-fw"></i>&nbsp;项目列表</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li data-name="feedback" class="layui-nav-item">
+                        <a href="javascript:;" lay-direction="2">
+                            <i class="layui-icon layui-icon-file-b"></i>
+                            <cite>文件管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a class="list-group-item" lay-href="file/listFile"><i class="fa fa fa-th-list fa-fw"
+                                                                                       aria-hidden="true">&nbsp;文件列表</i></a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 页面标签 -->
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其他</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                    <li lay-id="project/listProject" lay-attr="project/listProject" class="layui-this"><i
+                            class="layui-icon layui-icon-home"></i></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body">
+            <div class="layadmin-tabsbody-item layui-show">
+                <iframe src="project/listProject" frameborder="0" class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+</div>
+<script src="https://static.iskwen.com/jquery-v3.4.1/jquery-3.4.1.min.js"></script>
+<script src="https://static.iskwen.com/layui-v2.5.5/layui/layui.all.js"></script>
+<script src="https://static.iskwen.com/ly2ui-v1.0.0/ly2ui.all.js?v=1620152181" charset="utf-8"></script>
+<script src='https://static.iskwen.com/util-v1.0.0/js/md5.js'></script>
+<script src='https://static.iskwen.com/util-v1.0.0/js/util.js'></script>
+<script src='https://static.iskwen.com/lymateriallib/js/enum.js?v=1622563892'></script>
+<script src='https://static.iskwen.com/lymateriallib/js/main/index.js?v=1622563892'></script>
+<script>
+    layui.config({
+        base: 'https://static.iskwen.com/lymateriallib/config/'
+    }).extend({
+        index: 'lib/index'
+    }).use('index');
+</script>
+<script>
+    var task_checkToken = window.setInterval('checkToken()', 30000);
+    $(document).ready(function () {
+        browserRedirect();
+        $.ajax({
+            url: URL.API_HOST+"/user/checkToken",
+            type: "post",
+            dataType: "json",
+            headers: {'Authorization': getCookie("token")},
+            success: function (res) {
+                if (res.code == 200) {
+                    console.log(res.data)
+                } else {
+                    top.location.href = '/';
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMsg(TIPS.ERROR);
+            }
+        });
+        $.ajax({
+            url: URL.API_HOST+"/user/getUserInfo",
+            type: "post",
+            dataType: "json",
+            headers: {'Authorization': getCookie("token")},
+            success: function (res) {
+                if (res.code == 200) {
+                    $("#usernameByCite").html(res.data.username);
+                } else {
+                    showTip(res.msg);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMsg(TIPS.ERROR);
+            }
+        });
+    })
+
+    function logout() {
+        layer.confirm("您确定要退出登录吗？", {
+            icon: 3,
+            title: '温馨提示'
+        }, function () {
+            top.location.href = 'logout';
+        });
+    }
+
+    function refresh() {
+        $.ajax({
+            url: URL.API_HOST+"/user/checkToken",
+            type: "post",
+            dataType: "json",
+            headers: {'Authorization': getCookie("token")},
+            success: function (res) {
+                if (res.code != 200) {
+                    top.location.href = 'logout';
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMsg(TIPS.ERROR);
+            }
+        });
+    }
+
+    function checkToken() {
+        $.ajax({
+            url: URL.API_HOST+"/user/checkToken",
+            type: "post",
+            dataType: "json",
+            headers: {'Authorization': getCookie("token")},
+            success: function (res) {
+                if (res.code == 200) {
+                    console.log(res.data)
+                } else {
+                    clearInterval(task_checkToken);
+                    layer.confirm("登录信息已过期，是否重新登录？", {
+                        icon: 3,
+                        title: '温馨提示'
+                    }, function () {
+                        top.location.href = 'logout';
+                    });
+
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMsg(TIPS.ERROR);
+            }
+        });
+    }
+
+    function browserRedirect() {
+        var sUserAgent = navigator.userAgent.toLowerCase();
+        // alert(sUserAgent);
+        if (/ipad|iphone|midp|rv:1.2.3.4|ucweb|android|windows ce|windows mobile/.test(sUserAgent)) {
+            //移动端
+        } else {//PC
+            $("#versionMsg").removeAttr("href");
+            $('#versionMsg').attr('layadmin-event', 'about');
+        }
+    }
+</script>
+</body>
+</html>
+
+

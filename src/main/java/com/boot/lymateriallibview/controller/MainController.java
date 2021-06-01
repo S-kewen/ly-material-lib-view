@@ -20,4 +20,12 @@ public class MainController {
     public String login() {
         return "main/login";
     }
+    @RequestMapping("/logout")
+    public String logout() {
+        return "main/logout";
+    }
+    @RequestMapping("/index")
+    public String index() {
+        return "main/index";
+    }
 }
