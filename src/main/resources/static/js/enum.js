@@ -1,4 +1,4 @@
-var host = "//127.0.0.1:8899/v1/api";
+var host = "//ysc.ganhuoya.com:8899/v1/api";
 URL = {
     "API_HOST" : host,
     "API_LOGIN" : host+"/user/login"
