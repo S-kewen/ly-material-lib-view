@@ -159,45 +159,5 @@
 <script src='https://static.iskwen.com/util-v1.0.0/js/md5.js'></script>
 <script src='https://static.iskwen.com/util-v1.0.0/js/util.js'></script>
 <script src='https://static.iskwen.com/lymateriallib/js/enum.js?v=1622563892'></script>
-<script src='https://static.iskwen.com/lymateriallib/js/login.js?v=1622563892'></script>
-<script>
-    function login() {
-        let username = $("#username").val();
-        let password = $("#password").val();
-        if (username == "") {
-            showTip("请先输入账号！");
-            return;
-        }
-        if (password == "") {
-            showTip("请先输入密码！");
-            return;
-        }
-        let loading = layer.load(0, {shade: false});
-        $.ajax({
-            url: URL.API_LOGIN,
-            type: "POST",
-            dataType: "json",
-            data: "username=" + username + "&password=" + hex_md5(password),
-            success: function (res) {
-                layer.close(loading);
-                if (res.code === 200) {
-                    setCookie("token", res.data.token, 1000 * 60 * 60 * 24);
-                    top.window.location = 'index';
-                } else {
-                    showTip(res.msg);
-                }
-
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                showErrorMsg(TIPS.ERROR);
-            }
-        });
-    }
-
-    function keyLogin() {
-        if (event.keyCode === 13) {
-            document.getElementById("login").click();
-        }   //回车键的键值为13
-    }
-</script>
+<script src='https://static.iskwen.com/lymateriallib/js/main/login.js?v=1622563892'></script>
 </html>
