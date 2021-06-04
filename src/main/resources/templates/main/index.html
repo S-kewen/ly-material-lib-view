@@ -99,6 +99,20 @@
                             </dd>
                         </dl>
                     </li>
+                    <li data-name="feedback" class="layui-nav-item">
+                        <a href="javascript:;" lay-direction="2">
+                            <i class="layui-icon layui-icon-auz"></i>
+                            <cite>Api管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a class="list-group-item" target="_blank"
+                                   href="http://www.docway.net/project/1fTYqlLEXpZ/1fTYqvsf9G4"><i
+                                        class="fa fa fa-th-list fa-fw"
+                                        aria-hidden="true">&nbsp;Api列表</i></a>
+                            </dd>
+                        </dl>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -155,7 +169,7 @@
     $(document).ready(function () {
         browserRedirect();
         $.ajax({
-            url: URL.API_HOST+"/user/checkToken",
+            url: URL.API_HOST + "/user/checkToken",
             type: "post",
             dataType: "json",
             headers: {'Authorization': getCookie("token")},
@@ -171,7 +185,7 @@
             }
         });
         $.ajax({
-            url: URL.API_HOST+"/user/getUserInfo",
+            url: URL.API_HOST + "/user/getUserInfo",
             type: "post",
             dataType: "json",
             headers: {'Authorization': getCookie("token")},
@@ -199,7 +213,7 @@
 
     function refresh() {
         $.ajax({
-            url: URL.API_HOST+"/user/checkToken",
+            url: URL.API_HOST + "/user/checkToken",
             type: "post",
             dataType: "json",
             headers: {'Authorization': getCookie("token")},
@@ -216,7 +230,7 @@
 
     function checkToken() {
         $.ajax({
-            url: URL.API_HOST+"/user/checkToken",
+            url: URL.API_HOST + "/user/checkToken",
             type: "post",
             dataType: "json",
             headers: {'Authorization': getCookie("token")},

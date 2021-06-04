@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://static.iskwen.com/layui-v2.5.5/layui/css/layui.css" media="all">
+    <script src="https://static.iskwen.com/jquery-v3.4.1/jquery-3.4.1.min.js"></script>
+    <script src="https://static.iskwen.com/layui-v2.5.5/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="popupLayer">
+    <div class="layui-tab">
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">项目</label>
+                    <div class="layui-input-block">
+                        <select id="pid" lay-search lay-filter="pid">
+                            <option value="">请先选择项目</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                                <textarea id="projectRemark" placeholder="长度不能大于2550"
+                                          class="layui-textarea"
+                                ></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文件名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="fileName" placeholder="请先输入文件名"
+                               class="layui-input"
+                               autocomplete="off"
+                        >
+                    </div>
+                    <label class="layui-form-label">优先级</label>
+                    <div class="layui-input-inline">
+                        <select id="priority" lay-search>
+                            <option value="1">低</option>
+                            <option value="2">中</option>
+                            <option value="3">高</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键词</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="keyword" autocomplete="off"
+                               placeholder="多个关键词请用逗号隔开"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">URL</label>
+                    <div class="layui-input-inline" style="width: 64%">
+                        <input type="text" id="url" autocomplete="off"
+                               placeholder="上传完成后自动生成"
+                               class="layui-input"
+                        >
+                    </div>
+                    <button type="button" class="layui-btn" id="upload2"
+                    >上传文件
+                    </button>
+                    <input type="file" accept="*" id="upload" class="layui-btn" style="visibility:hidden">
+                    <input type="hidden" name="file" style="visibility:hidden">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                                <textarea id="remark" placeholder="长度不能大于2550"
+                                          class="layui-textarea"
+                                ></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+<script src="https://static.iskwen.com/jquery-v3.4.1/jquery-3.4.1.min.js"></script>
+<script src="https://static.iskwen.com/layui-v2.5.5/layui/layui.all.js"></script>
+<script src="https://static.iskwen.com/ly2ui-v1.0.0/ly2ui.all.js?v=1583914281" charset="utf-8"></script>
+<script src='https://static.iskwen.com/util-v1.0.0/js/util.js'></script>
+<script src='https://static.iskwen.com/lymateriallib/js/enum.js?v=1622563892'></script>
+<script src="https://static.iskwen.com/lymateriallib/js/file/uploadFile.js?v=1622563892"></script>
+<script>
+    var projectRemark = [];
+    var form = layui.form;
+    form.on('select(pid)', function (data) {
+        $("#projectRemark").text(projectRemark[$('option:selected', '#pid').index() - 1]);
+    });
+    $.ajax({
+        url: URL.API_HOST + "/project/listProject",
+        type: "post",
+        dataType: "json",
+        data: "pageNumber=1&pageSize=10000000&state=1",
+        headers: {'Authorization': getCookie("token")},
+        success: function (res) {
+            if (res.code === 200) {
+                if (res.data.list !== undefined) {
+                    var optionstring = "<option value='0' disabled>请先选择项目</option>";
+                    for (var j = 0; j < res.data.list.length; j++) {
+                        optionstring += "<option value=\"" + res.data.list[j].id + "\" >" + res.data.list[j].name + " " + "</option>";
+                        projectRemark.push(res.data.list[j].remark);
+                    }
+                    if (res.data.list.length > 0 && projectRemark.length > 0) {
+                        $("#projectRemark").text(projectRemark[0]);
+                    }
+                    $("#pid").html(optionstring);
+                    form.render();
+                }
+            } else {
+                showTip(res.tip);
+            }
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            showErrorMsg(TIPS.ERROR);
+        }
+    });
+
+    $("#upload2").click(function () {
+        $("#upload").trigger('click');
+    })
+    $(document).on('change', '#upload', function () {
+        let file = document.getElementById('upload').files[0];
+        $.ajax({
+            url: URL.API_HOST + "/file/getSign",
+            type: "post",
+            dataType: "json",
+            data: "length=" + file.size + "&saveKey=/" + (new Date()).valueOf(),
+            headers: {'Authorization': getCookie("token")},
+            success: function (res) {
+                if (res.code === 200) {
+                    let url = res.data.url;
+                    var formData = new FormData();
+                    formData.append("policy", res.data.policy);
+                    formData.append("authorization", res.data.sign);
+                    formData.append("file", file);
+                    var loading = layer.load(0, {shade: false});
+                    $.ajax({
+                        url: "http://v0.api.upyun.com" + res.data.uri,
+                        type: "post",
+                        data: formData,
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        xhr: function () {
+                            let xhr = new XMLHttpRequest();
+                            //使用XMLHttpRequest.upload监听上传过程，注册progress事件，打印回调函数中的event事件
+                            xhr.upload.addEventListener('progress', function (e) {
+                                console.log(e);
+                                let progressRate = (e.loaded / e.total) * 100;
+                                console.log(progressRate);
+                                if (progressRate >= 100) {
+                                    $("#upload2").text("上传完毕");
+                                } else {
+                                    $("#upload2").text("上传中(" + progressRate.toFixed(2) + "%)");
+                                }
+                            });
+                            return xhr;
+                        }
+                        ,
+                        beforeSend: function (request) {
+
+                        }
+                        ,
+                        success: function (res) {
+                            layer.close(loading);
+                            if (res.code === 200) {
+                                $("#fileName").val(file.name);
+                                $("#url").val(url + res.url);
+                                showMsg("上传成功");
+                            } else {
+                                showTip(res.message);
+                            }
+                        }
+                        ,
+                        error: function (res) {
+                            layer.close(loading);
+                            console.log(res);
+                            showTip(res.responseText);
+                        }
+                    });
+                } else {
+                    showTip(res.msg);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showTip(TIPS.ERROR);
+            }
+        })
+        ;
+    })
+    ;
+</script>
+</html>
