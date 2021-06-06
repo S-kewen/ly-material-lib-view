@@ -44,7 +44,7 @@ $(document).on('change', '#upload',
             url: URL.API_HOST + "/file/getSign",
             type: "post",
             dataType: "json",
-            data: "length=" + file.size + "&saveKey=/" + (new Date()).valueOf(),
+            data: "length=" + file.size + "&saveKey=/" + getFileName(file.name),
             headers: {
                 'Authorization': getCookie("token")
             },
@@ -107,3 +107,13 @@ $(document).on('change', '#upload',
             }
         })
     });
+
+function getFileName(str) {
+    const end = str.substr(str.lastIndexOf(".") + 1);
+    if (end != "" && end != undefined && end != null && str.indexOf(".") != -1) {
+        return (new Date()).valueOf() + "." + end;
+    } else {
+        return (new Date()).valueOf();
+    }
+
+}

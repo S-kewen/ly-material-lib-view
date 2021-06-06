@@ -78,24 +78,24 @@
                     <li data-name="home" class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;" lay-direction="2">
                             <i class="layui-icon layui-icon-home"></i>
-                            <cite>项目管理</cite>
+                            <cite>文件管理</cite>
                         </a>
                         <dl class="layui-nav-child list-group">
                             <dd data-name="console" class="layui-this">
-                                <a class="list-group-item" lay-href="project/listProject"><i
-                                        class="fa fa-th-list fa-fw"></i>&nbsp;项目列表</a>
+                                <a class="list-group-item" lay-href="file/listFile"><i
+                                        class="fa fa-th-list fa-fw"></i>&nbsp;文件列表</a>
                             </dd>
                         </dl>
                     </li>
                     <li data-name="feedback" class="layui-nav-item">
                         <a href="javascript:;" lay-direction="2">
                             <i class="layui-icon layui-icon-file-b"></i>
-                            <cite>文件管理</cite>
+                            <cite>项目管理</cite>
                         </a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a class="list-group-item" lay-href="file/listFile"><i class="fa fa fa-th-list fa-fw"
-                                                                                       aria-hidden="true">&nbsp;文件列表</i></a>
+                                <a class="list-group-item" lay-href="project/listProject"><i class="fa fa fa-th-list fa-fw"
+                                                                                       aria-hidden="true">&nbsp;项目列表</i></a>
                             </dd>
                         </dl>
                     </li>
@@ -135,7 +135,7 @@
             </div>
             <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
                 <ul class="layui-tab-title" id="LAY_app_tabsheader">
-                    <li lay-id="project/listProject" lay-attr="project/listProject" class="layui-this"><i
+                    <li lay-id="file/listFile" lay-attr="file/listFile" class="layui-this"><i
                             class="layui-icon layui-icon-home"></i></li>
                 </ul>
             </div>
@@ -143,7 +143,7 @@
         <!-- 主体内容 -->
         <div class="layui-body" id="LAY_app_body">
             <div class="layadmin-tabsbody-item layui-show">
-                <iframe src="project/listProject" frameborder="0" class="layadmin-iframe"></iframe>
+                <iframe src="file/listFile" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
         <!-- 辅助元素，一般用于移动设备下遮罩 -->
