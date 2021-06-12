@@ -135,7 +135,7 @@ function refreshProjectSort() {
                 $("#projectSort").empty();
                 $("#projectSort").append("<dd><a href='javascript:refreshProjectSort();\'><i class='fa fa-refresh fa-fw'>&nbsp;&nbsp;刷新列表</i></a></dd>");
                 for (var j = 0; j < res.data.list.length; j++) {
-                    $("#projectSort").append("<dd><a lay-href='file/listFile?pid=" + res.data.list[j].id + "'>" + res.data.list[j].name + "</a></dd>");
+                    $("#projectSort").append("<dd><a lay-href='file/listFileByPid?pid=" + res.data.list[j].id + "'>" + res.data.list[j].name + "</a></dd>");
                 }
                 showMsg("刷新成功");
             } else {
