@@ -34,15 +34,6 @@ var grid = $("#tableView").bootstrapTable({
         width: 50
     },
         {
-            field: 'projectName',
-            title: '项目名称',
-            align: 'center',
-            width: 120,
-            formatter: function (value, row, index) {
-                return "<button class='btn btn-info btn-rounded btn-xs' data-clipboard-text='" + value + "'>" + value + "</a>";
-            }
-        },
-        {
             field: 'name',
             title: '文件名',
             align: 'center',
@@ -270,15 +261,15 @@ function uploadFile() {
         type: 2,
         anim: 1,
         title: "上传文件",
-        content: 'uploadFile',
+        content: 'uploadFileByPid?pid=' + getUrlValue("pid"),
         btn: ['确定', '取消'],
         btnAlign: 'c',
         resize: false,
         scrollbar: false,
-        area: ['900px', '620px'],
+        area: ['900px', '570px'],
         yes: function (index, layero) {
             const body = layer.getChildFrame('#popupLayer', index);
-            const pid = body.find("select[id='pid']").val();
+            const pid = getUrlValue("pid");
             const fileName = body.find("input[id='fileName']").val();
             const keyword = body.find("input[id='keyword']").val();
             const priority = body.find("select[id='priority']").val();

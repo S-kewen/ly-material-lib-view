@@ -17,6 +17,10 @@ public class FileController {
     public String listFile() {
         return "file/listFile";
     }
+    @RequestMapping("/listFileByPid")
+    public String listFileByPid() {
+        return "file/listFileByPid";
+    }
     @RequestMapping("/uploadFile")
     public String uploadFile() {
         return "file/uploadFile";
@@ -24,5 +28,9 @@ public class FileController {
     @RequestMapping("/editFile")
     public String editFile() {
         return "file/editFile";
+    }
+    @RequestMapping("/uploadFileByPid")
+    public String uploadFileByPid() {
+        return "file/uploadFileByPid";
     }
 }

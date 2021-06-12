@@ -39,7 +39,26 @@ $(document).ready(function () {
             showErrorMsg(TIPS.ERROR);
         }
     });
-})
+    $.ajax({
+        url: URL.API_HOST + "/project/listProject",
+        type: "post",
+        dataType: "json",
+        data: "pageNumber=1&pageSize=10000000&state=1",
+        headers: {'Authorization': getCookie("token")},
+        success: function (res) {
+            if (res.code == 200) {
+                for (var j = 0; j < res.data.list.length; j++) {
+                    $("#projectSort").append("<dd><a lay-href='file/listFileByPid?pid=" + res.data.list[j].id + "'>" + res.data.list[j].name + "</a></dd>");
+                }
+            } else {
+                showTip(res.msg);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            showErrorMsg(TIPS.ERROR);
+        }
+    });
+});
 
 function logout() {
     layer.confirm("您确定要退出登录吗？", {
@@ -102,4 +121,29 @@ function browserRedirect() {
         $("#versionMsg").removeAttr("href");
         $('#versionMsg').attr('layadmin-event', 'about');
     }
+}
+
+function refreshProjectSort() {
+    $.ajax({
+        url: URL.API_HOST + "/project/listProject",
+        type: "post",
+        dataType: "json",
+        data: "pageNumber=1&pageSize=10000000&state=1",
+        headers: {'Authorization': getCookie("token")},
+        success: function (res) {
+            if (res.code == 200) {
+                $("#projectSort").empty();
+                $("#projectSort").append("<dd><a href='javascript:refreshProjectSort();\'><i class='fa fa-refresh fa-fw'>&nbsp;&nbsp;刷新列表</i></a></dd>");
+                for (var j = 0; j < res.data.list.length; j++) {
+                    $("#projectSort").append("<dd><a lay-href='file/listFile?pid=" + res.data.list[j].id + "'>" + res.data.list[j].name + "</a></dd>");
+                }
+                showMsg("刷新成功");
+            } else {
+                showTip(res.msg);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            showErrorMsg(TIPS.ERROR);
+        }
+    });
 }
