@@ -83,11 +83,22 @@ $(document).on('change', '#upload',
                         beforeSend: function (request) {
                         },
                         success: function (res) {
-                            layer.close(loading);
                             if (res.code === 200) {
                                 $("#fileName").val(file.name);
                                 $("#url").val(url + res.url);
-                                showMsg("上传成功")
+                                if (getFileType(file.name) === "mp4") {
+                                    let audio = new Audio(url + res.url);
+                                    audio.addEventListener("loadedmetadata", function (e) {
+                                        console.log(e);
+                                        $("#videoLength").text(parseInt(audio.duration));
+                                        layer.close(loading);
+                                        showMsg("上传成功");
+                                    });
+                                } else {
+                                    $("#videoLength").text(0);
+                                    layer.close(loading);
+                                    showMsg("上传成功");
+                                }
                             } else {
                                 showTip(res.message)
                             }
@@ -108,6 +119,10 @@ $(document).on('change', '#upload',
         })
     });
 
+function getFileType(str) {
+    return str.substr(str.lastIndexOf(".") + 1);
+}
+
 function getFileName(str) {
     const end = str.substr(str.lastIndexOf(".") + 1);
     if (end != "" && end != undefined && end != null && str.indexOf(".") != -1) {
@@ -115,5 +130,4 @@ function getFileName(str) {
     } else {
         return (new Date()).valueOf();
     }
-
 }

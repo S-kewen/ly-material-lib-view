@@ -96,6 +96,12 @@ var grid = $("#tableView").bootstrapTable({
             // }
         },
         {
+            field: 'videoLength',
+            title: '时长',
+            align: 'center',
+            width: 50
+        },
+        {
             field: 'remark',
             title: '备注',
             align: 'center',
@@ -274,6 +280,7 @@ function uploadFile() {
             const keyword = body.find("input[id='keyword']").val();
             const priority = body.find("select[id='priority']").val();
             const url = body.find("input[id='url']").val();
+            const videoLength = body.find("label[id='videoLength']").text();
             const remark = body.find("textarea[id='remark']").val();
             if (!(pid > 0)) {
                 showTip("请先选择一个项目");
@@ -303,6 +310,10 @@ function uploadFile() {
                 showTip("url长度不能大于2550");
                 return false;
             }
+            if (videoLength === undefined || videoLength === "") {
+                showTip("正在获取视频长度,请稍后再试");
+                return false;
+            }
             if (remark.length > 2550) {
                 showTip("备注长度不能大于2550");
                 return false;
@@ -311,7 +322,7 @@ function uploadFile() {
                 url: URL.API_HOST + "/file/addFile",
                 type: "post",
                 dataType: "json",
-                data: "pid=" + pid + "&name=" + fileName + "&keyword=" + keyword + "&priority=" + priority + "&url=" + url + "&remark=" + remark,
+                data: "pid=" + pid + "&name=" + fileName + "&keyword=" + keyword + "&priority=" + priority + "&url=" + url + "&videoLength=" + videoLength + "&remark=" + remark,
                 headers: {
                     'Authorization': getCookie("token")
                 },
