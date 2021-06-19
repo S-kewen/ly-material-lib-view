@@ -33,4 +33,12 @@ public class FileController {
     public String uploadFileByPid() {
         return "file/uploadFileByPid";
     }
+    @RequestMapping("/listFileByFid")
+    public String listFileByFid() {
+        return "file/listFileByFid";
+    }
+    @RequestMapping("/uploadFileByFid")
+    public String uploadFileByFid() {
+        return "file/uploadFileByFid";
+    }
 }

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://static.iskwen.com/lymateriallib/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/animate.min.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/style.min862f.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/layui-v2.5.5/layui/css/layui.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/ly2ui-v1.0.0/css/ly2ui.css" rel="stylesheet">
+    <style type="text/css">
+        .ibox-content .form-inline .form-group {
+            display: inline-block;
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="animated fadeInRight" style="padding: 1 1 1 1">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">文件夹管理</div>
+
+                            <div class="layui-card-body">
+                                <button type="button" class="layui-btn layui-btn-sm" id="createFolder"
+                                        onclick="addFolder();">新建文件夹
+                                </button>
+                                <div id="listFolder"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://static.iskwen.com/jquery-v3.4.1/jquery-3.4.1.min.js"></script>
+<script src="https://static.iskwen.com/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="https://static.iskwen.com/lymateriallib/js/content.min.js"></script>
+<script src="https://static.iskwen.com/layui-v2.5.5/layui/layui.all.js"></script>
+<script src="https://static.iskwen.com/ly2ui-v1.0.0/ly2ui.all.js?v=1620152181" charset="utf-8"></script>
+<script src='https://static.iskwen.com/util-v1.0.0/js/util.js'></script>
+<script src='https://static.iskwen.com/lymateriallib/js/enum.js?v=1622563892'></script>
+<script>
+    var data = [];
+    $(document).ready(function () {
+        reloadTree();
+    });
+
+    function addFolder() {
+        layer.prompt({title: '请输入文件夹名称', maxlength: 255}, function (str, index) {
+            $.ajax({
+                url: URL.API_HOST + "/folder/addFolder",
+                type: "post",
+                dataType: "json",
+                data: "pid=" + getUrlValue("pid") + "&fid=-1&name=" + str,
+                headers: {'Authorization': getCookie("token")},
+                success: function (res) {
+                    if (res.code == 200) {
+                        reloadTree();
+                        layer.close(index);
+                    } else {
+                        showTip(res.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    showErrorMsg(TIPS.ERROR);
+                }
+            });
+        });
+    }
+
+    function reloadTree() {
+        $.ajax({
+            url: URL.API_HOST + "/folder/listFolder",
+            type: "post",
+            dataType: "json",
+            data: "pid=" + getUrlValue("pid"),
+            headers: {'Authorization': getCookie("token")},
+            success: function (res) {
+                if (res.code == 200) {
+                    data = res.data;
+                    refreshTree();
+                } else {
+                    showTip(res.msg);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMsg(TIPS.ERROR);
+            }
+        });
+    }
+
+    function refreshTree() {
+        layui.tree.render({
+            elem: '#listFolder'
+            , data: data
+            , edit: ['add', 'update', 'del']
+            , isJump: true
+            , onlyIconControl: true
+            , text: {
+                defaultNodeName: "未命名" //节点默认名称
+                , none: '无数据' //数据为空时的提示文本
+            }
+            , click: function (obj) {
+                openNewTab("/file/listFileByFid?pid=" + getUrlValue("pid") + "&fid=" + obj.data.id, "文件管理 - " + obj.data.title);
+                console.log(obj);
+            }
+            , operate: function (obj) {
+                switch (obj.type) {
+                    case "add":
+                        $.ajax({
+                            url: URL.API_HOST + "/folder/addFolder",
+                            type: "post",
+                            dataType: "json",
+                            data: "pid=" + getUrlValue("pid") + "&fid=" + obj.data.id + "&name=未命名",
+                            headers: {'Authorization': getCookie("token")},
+                            success: function (res) {
+                                if (res.code == 200) {
+                                    showMsg("创建成功");
+                                } else {
+                                    showTip(res.msg);
+                                }
+                                reloadTree();
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                showErrorMsg(TIPS.ERROR);
+                            }
+                        });
+                        break;
+                    case "update":
+                        $.ajax({
+                            url: URL.API_HOST + "/folder/changeName",
+                            type: "post",
+                            dataType: "json",
+                            data: "id=" + obj.data.id + "&name=" + obj.data.title,
+                            headers: {'Authorization': getCookie("token")},
+                            success: function (res) {
+                                if (res.code == 200) {
+                                    showMsg("修改成功");
+                                } else {
+                                    showTip(res.msg);
+                                    reloadTree();
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                showErrorMsg(TIPS.ERROR);
+                            }
+                        });
+                        break;
+                    case "del":
+                        $.ajax({
+                            url: URL.API_HOST + "/folder/deleteFolder",
+                            type: "post",
+                            dataType: "json",
+                            data: "id=" + obj.data.id,
+                            headers: {'Authorization': getCookie("token")},
+                            success: function (res) {
+                                if (res.code == 200) {
+                                    showMsg("删除成功");
+                                } else {
+                                    showTip(res.msg);
+                                    reloadTree();
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                showErrorMsg(TIPS.ERROR);
+                            }
+                        });
+                        break;
+                }
+                console.log(obj);
+            }
+        });
+    }
+
+    function getFolderName() {
+        return "未命名" + (new Date()).valueOf();
+    }
+
+    function openNewTab(url, title) {
+        if (top.layui.index) {
+            top.layui.index.openTabsPage(url, title)
+        } else {
+            window.open(url)
+        }
+    }
+</script>
+</body>
+</html>

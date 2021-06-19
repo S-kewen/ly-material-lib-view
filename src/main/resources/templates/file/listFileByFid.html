@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://static.iskwen.com/lymateriallib/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/animate.min.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/style.min862f.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/layui-v2.5.5/layui/css/layui.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/ly2ui-v1.0.0/css/ly2ui.css" rel="stylesheet">
+    <style type="text/css">
+        .ibox-content .form-inline .form-group {
+            display: inline-block;
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="animated fadeInRight" style="padding: 1 1 1 1">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <input type="text" placeholder="请输入文件名" id="name" class="form-control" autocomplete="off">
+                    <input type="text" placeholder="请输入关键词" id="keyword" class="form-control" autocomplete="off">
+                    <input type="text" placeholder="请选择时间范围" id="selectTime" class="form-control"
+                           style="width:300px"
+                           autocomplete="off">
+                    <label class="row-sm-2 control-label">状态：</label>
+                    <select class="form-control" name="state" id="state">
+                        <option value="0" selected>不限</option>
+                        <option value="1">正常</option>
+                        <option value="2">停用</option>
+                    </select>
+                    <label class="row-sm-2 control-label">优先级：</label>
+                    <select class="form-control" name="state" id="priority">
+                        <option value="0" selected>不限</option>
+                        <option value="1">低</option>
+                        <option value="2">中</option>
+                        <option value="3">高</option>
+                    </select>
+                    <span class="form-group-btn">
+                                  <button type="button" class="btn btn-primary" style="margin-bottom:0px"
+                                          onclick="javascript:reload()">搜索</button>
+                                </span>
+                </div>
+                <div class="form-group">
+                           <span class="form-group-btn">
+                                  <button type="button" class="btn btn-primary" style="margin-bottom:0px"
+                                          onclick="javascript:reload()">刷新</button>
+                           </span>
+                </div>
+                <div class="form-group">
+                           <span class="form-group-btn">
+                                  <button type="button" class="btn btn-primary" style="margin-bottom:0px"
+                                          onclick="javascript:resetSearch()">重置</button>
+                           </span>
+                </div>
+                <div class="form-group">
+                           <span class="form-group-btn">
+                                  <button type="button" class="btn btn-warning" style="margin-bottom:0px"
+                                          onclick="javascript:uploadFile()">上传文件</button>
+                           </span>
+                </div>
+            </form>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <table id="tableView"></table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://static.iskwen.com/jquery-v3.4.1/jquery-3.4.1.min.js"></script>
+<script src="https://static.iskwen.com/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="https://static.iskwen.com/lymateriallib/js/content.min.js"></script>
+<script src="https://static.iskwen.com/bootstrap-3.3.7-dist/js/bootstrap-table.min.js"></script>
+<script src="https://static.iskwen.com/bootstrap-3.3.7-dist/js/bootstrap-table-mobile.min.js"></script>
+<script src="https://static.iskwen.com/bootstrap-3.3.7-dist/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="https://static.iskwen.com/layui-v2.5.5/layui/layui.all.js"></script>
+<script src="https://static.iskwen.com/ly2ui-v1.0.0/ly2ui.all.js?v=1620152181" charset="utf-8"></script>
+<script src="https://static.iskwen.com/clipboard/clipboard.min.js"></script>
+<script src='https://static.iskwen.com/util-v1.0.0/js/util.js'></script>
+<script src='https://static.iskwen.com/lymateriallib/js/enum.js?v=1622563892'></script>
+<script src="https://static.iskwen.com/lymateriallib/js/file/listFileByFid.js?v=1623757214"></script>
+</body>
+</html>
