@@ -95,14 +95,15 @@ var grid = $("#tableView").bootstrapTable({
             field: 'keyword',
             title: '关键词',
             align: 'center',
-            width: 150
-            // formatter: function(value, row, index) {
-            //     if (value === '' || value === undefined || value === null) {
-            //         return "<button class='layui-btn layui-btn-xs layui-btn-radius layui-btn-disabled'>查看</button>"
-            //     } else {
-            //         return "<button onClick=\"layer.alert('" + value + "');\" class='btn btn-warning btn-rounded btn-xs'>查看</button>"
-            //     }
-            // }
+            width: 150,
+            formatter: function (value, row, index) {
+                // if (value === '' || value === undefined || value === null) {
+                //     return "<button class='layui-btn layui-btn-xs layui-btn-radius layui-btn-disabled'>查看</button>"
+                // } else {
+                //     return "<button onClick=\"layer.alert('" + value + "');\" class='btn btn-warning btn-rounded btn-xs'>查看</button>"
+                // }
+                return value + "&nbsp;<button class='layui-btn layui-btn-xs layui-btn' onClick='javascript:changeKeyword(" + row.id + ",\"" + value + "\")'>修改</button>";
+            }
         },
         {
             field: 'videoLength',
@@ -357,4 +358,29 @@ function uploadFile() {
 
 function previewUrl(url) {
     window.open(url);
+}
+
+function changeKeyword(id, keyword) {
+    console.log(keyword);
+    layer.prompt({title: '请输入新的关键词', maxlength: 255, value: keyword}, function (str, index) {
+        $.ajax({
+            url: URL.API_HOST + "/file/changeKeyword",
+            type: "post",
+            dataType: "json",
+            data: "id=" + id + "&keyword=" + str,
+            headers: {'Authorization': getCookie("token")},
+            success: function (res) {
+                if (res.code == 200) {
+                    showMsg("修改成功");
+                    layer.close(index);
+                    reload();
+                } else {
+                    showTip(res.msg);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMsg(TIPS.ERROR);
+            }
+        });
+    });
 }
