@@ -9,6 +9,22 @@
 又拍雲：https://www.upyun.com/
 產品開發文檔：https://help.upyun.com/
 
+
+### 功能模塊
+```
+├─文件管理
+│  ├─全部文件
+│  ├─分類列表
+│  │  ├─項目1
+│  │  ├─項目2
+│  │  ├─項目3
+│  │  ├─...
+├─項目管理
+│  ├─項目列表
+├─Api管理
+│  ├─Api列表
+```
+
 ## Contact Author
 石桂華(Skwen) https://blog.iskwen.com
 # END
