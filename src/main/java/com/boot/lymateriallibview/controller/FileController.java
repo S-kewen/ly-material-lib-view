@@ -41,4 +41,13 @@ public class FileController {
     public String uploadFileByFid() {
         return "file/uploadFileByFid";
     }
+    @RequestMapping("/bulkUploadInit")
+    public String bulkUploadInit() {
+        return "file/bulkUploadInit";
+    }
+    @RequestMapping("/bulkUploadByFid")
+    public String bulkUploadByFid() {
+        return "file/bulkUploadByFid";
+    }
+
 }

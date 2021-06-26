@@ -379,3 +379,42 @@ function changeKeyword(id, keyword) {
         });
     });
 }
+
+function bulkUpload() {
+    layer.open({
+        type: 2,
+        anim: 2,
+        title: "请先配置文件参数",
+        content: 'bulkUploadInit?pid=' + getUrlValue("pid") + "&fid=" + getUrlValue("fid"),
+        btn: ['确定', '关闭'],
+        btnAlign: 'c',
+        resize: false,
+        scrollbar: false,
+        area: ['900px', '480px'],
+        yes: function (index, layero) {
+            const body = layer.getChildFrame('#popupLayer', index);
+            const keyword = body.find("input[id='keyword']").val();
+            const priority = body.find("select[id='priority']").val();
+            const remark = body.find("textarea[id='remark']").val();
+            layer.close(index);
+            layer.open({
+                type: 2,
+                title: "批量文件上传",
+                anim: 2,
+                maxmin: true,
+                shade: 0,
+                resize: false,
+                content: 'bulkUploadByFid?pid=' + getUrlValue("pid") + "&fid=" + getUrlValue("fid") + "&keyword=" + keyword + "&priority=" + priority + "&remark=" + remark,
+                btnAlign: 'c',
+                scrollbar: false,
+                area: ['1000px', '600px'],
+                cancel: function () {
+                    reload();
+                }
+            });
+        },
+        btn2: function (index, layero) {
+            layer.close(index);
+        }
+    });
+}

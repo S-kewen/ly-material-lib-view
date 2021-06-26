@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://static.iskwen.com/lymateriallib/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/animate.min.css" rel="stylesheet">
+    <link href="https://static.iskwen.com/lymateriallib/css/style.min862f.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://static.iskwen.com/layui-v2.5.5/layui/css/layui.css" media="all">
+    <style type="text/css">
+        .ibox-content .form-inline .form-group {
+            display: inline-block;
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+            cursor: pointer;
+        }
+
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        h1 {
+            font-family: "Microsoft YaHei";
+            font-weight: normal;
+        }
+
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: #0071ff;
+        }
+
+        .float-right {
+            float: right;
+        }
+
+        .page {
+            width: 960px;
+            margin: 0 auto;
+            font-size: 14px;
+        }
+
+        #form input[type="text"] {
+            width: 40px;
+            padding: 2px;
+            vertical-align: middle;
+        }
+
+        #form input[type="file"] {
+            vertical-align: middle;
+        }
+
+        .file-list {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .file-list {
+            width: 960px;
+            border-collapse: collapse;
+        }
+
+        .file-name {
+            display: inline-block;
+            width: 310px;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .file-item td {
+            border: 1px solid #FEFEFE;
+            padding: 5px 10px;
+            font-size: 12px;
+            line-height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .file-progress {
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            height: 6px;
+            background: #FEFEFE;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .file-progress-loaded {
+            position: absolute;
+            display: inline-block;
+            height: 6px;
+            background: #0071ff;
+        }
+
+    </style>
+</head>
+<body>
+<div class="animated fadeInRight" style="padding: 1 1 1 1">
+    <div class="ibox float-e-margins ">
+        <div class="ibox-content">
+            <div class="page">
+                <div id="app">
+                    <a href="javascript:;" class="file">选择文件<input type="file" value="请选择上传文件" multiple
+                                                                   @change="selectedFile" id="upload">
+                    </a>
+                    <!--                    <a href="javascript:;" class="file" >选择文件夹<input type="file" value="请选择上传文件" webkitdirectory @change="selectedFile" id="uploadButton2" >-->
+                    <!--                    </a>-->
+                    <table class="file-list layui-table" lay-even id="filesTable">
+                        <colgroup>
+                            <col style="width:40%;">
+                            <col style="width:15%;">
+                            <col style="width:15%;">
+                            <col style="width:15%;">
+                            <col style="width:15%;">
+                        </colgroup>
+                        <tr class="file-item">
+                            <th>文件名</th>
+                            <th>大小</th>
+                            <th>视频长度</th>
+                            <th>进度</th>
+                            <th>状态</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://static.iskwen.com/jquery-v3.4.1/jquery-3.4.1.min.js"></script>
+<script src="https://static.iskwen.com/layui-v2.5.5/layui/layui.all.js"></script>
+<script src="https://static.iskwen.com/ly2ui-v1.0.0/ly2ui.all.js?v=1620152181" charset="utf-8"></script>
+<script src='https://static.iskwen.com/util-v1.0.0/js/util.js'></script>
+<script src='https://static.iskwen.com/lymateriallib/js/enum.js?v=1622563892'></script>
+<script src="https://static.iskwen.com/lymateriallib/js/file/bulkUploadByFid.js?v=1624715131"></script>
+</body>
+</html>
