@@ -1,6 +1,0 @@
-spring:
-  profiles:
-    active: dev
-    #active: dev
-    #active: test
-    #active: prod
